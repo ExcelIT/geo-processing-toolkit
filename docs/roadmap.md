@@ -56,6 +56,7 @@ Improve traceability for professional and operational use cases.
 Planned work:
 - expanded JSON report schema
 - document and stabilize a shared JSON report schema across commands
+- nodata consistency summaries in raster stack validation reports
 - run summaries
 - validation status categories
 - warnings vs blocking failures

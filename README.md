@@ -228,7 +228,9 @@ Check whether a group of rasters can safely be used together before temporal com
 gptk validate-raster-stack ./rasters --pattern "*.tif" --recursive --json-out reports/stack_validation.json
 ```
 
-This command validates CRS, bounds, resolution, transform, dimensions, band count, dtype, driver, and nodata metadata, then writes a machine-readable report if requested.
+This command validates CRS, bounds, resolution, transform, dimensions, band count, dtype, driver, and nodata consistency, then writes a machine-readable report if requested.
+
+Nodata findings are reported as warnings so missing or inconsistent nodata metadata can be reviewed before stack-based processing begins.
 
 ## Why use this toolkit instead of general geospatial libraries?
 

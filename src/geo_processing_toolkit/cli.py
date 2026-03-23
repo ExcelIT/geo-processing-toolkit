@@ -136,6 +136,15 @@ def validate_raster_stack_cmd(
                 rendered = "OK" if state == "pass" else state.upper()
                 click.echo(f"- {label}: {rendered}")
 
+            nodata_summary = report.get("nodata_summary", {})
+            if report.get("checks", {}).get("nodata") == "warning" and nodata_summary.get("checked"):
+                missing_count = int(nodata_summary.get("missing_count", 0))
+                mismatch_count = int(nodata_summary.get("mismatch_count", 0))
+                click.echo(
+                    f"  - Missing nodata metadata: {missing_count} {'file' if missing_count == 1 else 'files'}"
+                )
+                click.echo(f"  - Nodata mismatches: {mismatch_count} {'file' if mismatch_count == 1 else 'files'}")
+
             if errors:
                 click.echo("")
                 click.echo("Errors:")

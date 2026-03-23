@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import time
 from pathlib import Path
 from typing import Any
@@ -56,6 +57,94 @@ def _compare_float_lists(left: list[float], right: list[float], tolerance: float
     if len(left) != len(right):
         return False
     return all(abs(a - b) <= tolerance for a, b in zip(left, right))
+
+
+def _normalize_nodata_value(value: Any) -> Any:
+    if value is None:
+        return None
+    try:
+        if isinstance(value, float) and math.isnan(value):
+            return "NaN"
+    except TypeError:
+        pass
+    return value
+
+
+def _nodata_equal(left: Any, right: Any) -> bool:
+    left_value = _normalize_nodata_value(left)
+    right_value = _normalize_nodata_value(right)
+    return left_value == right_value
+
+
+def _default_nodata_summary(checked: bool) -> dict[str, Any]:
+    if not checked:
+        return {"checked": False}
+    return {
+        "checked": True,
+        "reference_value": None,
+        "unique_values": [],
+        "missing_count": 0,
+        "mismatch_count": 0,
+        "all_missing": False,
+    }
+
+
+def _evaluate_nodata_consistency(
+    opened: list[dict[str, Any]],
+    reference_metadata: dict[str, Any],
+) -> tuple[str, dict[str, Any]]:
+    reference_value = _normalize_nodata_value(reference_metadata.get("nodata"))
+    unique_values: list[Any] = []
+    seen_values: set[Any] = set()
+    missing_count = 0
+    mismatch_count = 0
+    all_missing = True
+
+    for item in opened:
+        metadata = item["metadata"]
+        record = item["record"]
+        messages = record["messages"]
+        nodata_value = _normalize_nodata_value(metadata.get("nodata"))
+
+        if nodata_value not in seen_values:
+            seen_values.add(nodata_value)
+            unique_values.append(nodata_value)
+
+        if nodata_value is None:
+            missing_count += 1
+            messages.append(
+                {
+                    "level": WARNING,
+                    "code": "NODATA_MISSING",
+                    "message": "Raster is missing nodata metadata.",
+                }
+            )
+            continue
+
+        all_missing = False
+        if not _nodata_equal(nodata_value, reference_value):
+            mismatch_count += 1
+            messages.append(
+                {
+                    "level": WARNING,
+                    "code": "NODATA_MISMATCH",
+                    "message": (
+                        "Raster nodata value differs from reference "
+                        f"({nodata_value} vs {reference_value})."
+                    ),
+                }
+            )
+
+    nodata_status = WARNING if (missing_count > 0 or mismatch_count > 0 or all_missing) else PASS
+    summary = {
+        "checked": True,
+        "reference_value": reference_value,
+        "unique_values": unique_values,
+        "missing_count": missing_count,
+        "mismatch_count": mismatch_count,
+        "all_missing": all_missing,
+    }
+    return nodata_status, summary
 
 
 def _extract_raster_metadata(path: str) -> tuple[dict[str, Any] | None, dict[str, str] | None]:
@@ -129,6 +218,7 @@ def validate_raster_stack(
     tolerance_transform: float = 0.0,
 ) -> dict[str, Any]:
     start = time.perf_counter()
+    nodata_summary = _default_nodata_summary(check_nodata)
 
     checks: dict[str, str] = {
         "readable": PASS,
@@ -224,6 +314,7 @@ def validate_raster_stack(
                 "transform": float(tolerance_transform),
             },
             "reference_metadata": None,
+            "nodata_summary": nodata_summary,
             "files": files,
             "generated_at": utc_now_iso(),
             "duration_seconds": round(time.perf_counter() - start, 6),
@@ -347,39 +438,7 @@ def validate_raster_stack(
                     }
                 )
 
-            if check_nodata:
-                if metadata["nodata"] is None:
-                    checks["nodata"] = WARNING if checks["nodata"] != ERROR else checks["nodata"]
-                    messages.append(
-                        {
-                            "level": WARNING,
-                            "code": "NODATA_MISSING",
-                            "message": "Raster is missing nodata metadata.",
-                        }
-                    )
-                elif reference_metadata["nodata"] is None:
-                    checks["nodata"] = WARNING if checks["nodata"] != ERROR else checks["nodata"]
-                    messages.append(
-                        {
-                            "level": WARNING,
-                            "code": "NODATA_MISSING",
-                            "message": "Reference raster is missing nodata metadata.",
-                        }
-                    )
-                elif metadata["nodata"] != reference_metadata["nodata"]:
-                    checks["nodata"] = WARNING if checks["nodata"] != ERROR else checks["nodata"]
-                    messages.append(
-                        {
-                            "level": WARNING,
-                            "code": "NODATA_MISMATCH",
-                            "message": (
-                                "Raster nodata value differs from reference "
-                                f"({metadata['nodata']} vs {reference_metadata['nodata']})."
-                            ),
-                        }
-                    )
-
-            record["status"] = _worst_status([m["level"] for m in messages])
+            del messages
 
         stems = [Path(item["metadata"]["path"]).stem for item in opened]
         has_digit = [any(ch.isdigit() for ch in stem) for stem in stems]
@@ -398,6 +457,16 @@ def validate_raster_stack(
             files[0]["messages"].append(message)
             if files[0]["status"] == PASS:
                 files[0]["status"] = message["level"]
+
+    if check_nodata and reference_metadata is not None:
+        nodata_status, nodata_summary = _evaluate_nodata_consistency(opened, reference_metadata)
+        checks["nodata"] = nodata_status
+    elif not check_nodata:
+        checks["nodata"] = PASS
+
+    for item in opened:
+        record = item["record"]
+        record["status"] = _worst_status([m["level"] for m in record["messages"]])
 
     error_count = 0
     warning_count = 0
@@ -445,12 +514,13 @@ def validate_raster_stack(
                 "height": reference_metadata["height"],
                 "count": reference_metadata["count"],
                 "dtype": reference_metadata["dtype"],
-                "nodata": reference_metadata["nodata"],
+                "nodata": _normalize_nodata_value(reference_metadata["nodata"]),
                 "driver": reference_metadata["driver"],
             }
             if reference_metadata is not None
             else None
         ),
+        "nodata_summary": nodata_summary,
         "files": files,
         "generated_at": utc_now_iso(),
         "duration_seconds": round(time.perf_counter() - start, 6),
