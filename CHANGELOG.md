@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.2 - 2026-03-23
+
+### Added
+
+- README badges for CI, MIT license, and latest release
+- GitHub issue templates for bug reports and feature requests
+- pull request template with validation checklist
+- contributor `Makefile` targets: `lint`, `test`, `build`
+
+### Changed
+
+- release notes for `v0.1.1` updated with post-release improvements
+
 ## 0.1.1 - 2026-03-23
 
 ### Added
