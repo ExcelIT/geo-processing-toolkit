@@ -273,7 +273,13 @@ Where relevant, commands write JSON reports containing:
 
 This makes the toolkit easier to use in automated pipelines such as CI, scheduled tasks, n8n, or other orchestration systems.
 
-See `docs/report-schema.md` for the canonical JSON report envelope and example payload.
+## Report schema
+
+Machine-readable JSON output is being standardized across core commands.
+
+See:
+
+- `docs/report-schema.md`
 
 ## Suggested roadmap
 
