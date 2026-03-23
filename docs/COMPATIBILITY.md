@@ -35,6 +35,63 @@ Current focus is strongest in:
 - broader report consistency across commands
 - more real-world QA examples
 
+## Tested vs planned compatibility matrix
+
+### Python versions
+
+| Version | Status | Notes |
+|---------|--------|-------|
+| 3.11 | ✅ Tested | Primary CI target |
+| 3.12 | ⚠️ Expected to work | Not yet in CI |
+| 3.10 | ⚠️ Expected to work | Not yet in CI |
+| 3.9 | ❌ Not supported | Below minimum version |
+
+### Raster formats
+
+| Format | Status | Notes |
+|--------|--------|-------|
+| GeoTIFF | ✅ Tested | Primary validation target |
+| COG | 🔄 Planned | Validation guidance in roadmap |
+| NetCDF | ⚠️ Expected to work via Rasterio | Not explicitly tested |
+| HDF5 | ⚠️ Expected to work via Rasterio | Not explicitly tested |
+
+### Vector formats
+
+| Format | Status | Notes |
+|--------|--------|-------|
+| GeoPackage | ✅ Tested | Primary validation target |
+| Shapefile | ✅ Tested | Validation and repair tested |
+| GeoJSON | ⚠️ Expected to work | Not yet in test suite |
+| GeoParquet | 🔄 Planned | Validation support in roadmap |
+| FlatGeobuf | ❌ Out of scope for now | Not prioritized |
+
+### Core library dependencies
+
+| Library | Tested version range | Notes |
+|---------|---------------------|-------|
+| GeoPandas | 0.14+ | Primary vector processing |
+| Rasterio | 1.3+ | Primary raster I/O |
+| Shapely | 2.0+ | Geometry operations |
+| NumPy | 1.24+ | Array operations |
+| Click | 8.1+ | CLI framework |
+
+### Downstream platform expectations
+
+| Platform | Status | Notes |
+|----------|--------|-------|
+| QGIS | ⚠️ Expected compatible | Output formats QGIS-readable, not explicitly tested |
+| ArcGIS | ⚠️ Expected compatible | Standard formats, not explicitly tested |
+| Python workflows | ✅ Tested | GeoPandas/Rasterio interop tested |
+| Cloud catalogs | 🔄 Planned | STAC/COG alignment in roadmap |
+| CI/CD automation | ✅ Tested | JSON reporting designed for automation |
+
+### Legend
+
+- ✅ **Tested**: Actively tested in CI or local workflows
+- ⚠️ **Expected to work**: Should work based on dependencies, not explicitly tested
+- 🔄 **Planned**: On roadmap, not yet implemented
+- ❌ **Not supported / Out of scope**: Not currently prioritized
+
 ## Important note
 
 Compatibility does not mean hidden transformation.

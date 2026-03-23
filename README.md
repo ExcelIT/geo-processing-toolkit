@@ -148,6 +148,32 @@ The project is currently being exercised primarily on:
 
 The current focus is correctness, validation clarity, and report consistency before broader format expansion.
 
+## What usually fails first
+
+Real-world operational notes from validation workflows:
+
+**Raster stack validation**
+- **Nodata mismatches** are the most common warning. Mixed raster sources often use different nodata conventions (`-9999`, `0`, `None`, `NaN`). The validator detects these but still requires user judgment about whether to harmonize or reject the stack.
+- **CRS inconsistencies** are caught early but often indicate upstream data-sourcing problems that need manual review.
+- **Resolution drift** happens when rasters are resampled at different stages without preserving exact pixel alignment. The tolerance-based checks help, but sub-pixel drift still requires careful review.
+
+**Vector validation**
+- **Self-intersecting polygons** are detected and repairable, but repair does not always preserve the intended geometry semantics. Manual review is still recommended for critical datasets.
+- **Mixed geometry types** in a single layer cause downstream failures in many GIS platforms. The validator flags these, but splitting or filtering still requires explicit user action.
+
+**What the toolkit handles well**
+- Structural validation before data enters pipelines
+- Machine-readable QA evidence for audit trails
+- Early detection of format incompatibilities
+
+**What still requires user judgment**
+- Whether to harmonize nodata values or reject mismatched stacks
+- Whether repaired geometries preserve intended meaning
+- Whether tolerance-based checks are strict enough for a specific use case
+- Whether to proceed with warnings or treat them as blocking
+
+The toolkit is designed to surface problems clearly, not hide them behind automatic fixes.
+
 ## Dependencies
 
 Main runtime dependencies:
