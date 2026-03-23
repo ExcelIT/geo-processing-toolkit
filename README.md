@@ -65,7 +65,7 @@ pip install -e .
 ### Option 2: regular install from source
 
 ```bash
-git clone https://github.com/<your-username>/geo-processing-toolkit.git
+git clone https://github.com/ExcelIT/geo-processing-toolkit.git
 cd geo-processing-toolkit
 pip install .
 ```
@@ -83,16 +83,22 @@ Main runtime dependencies:
 ## Open source status
 
 - License: MIT (`LICENSE`)
-- Contribution guide: `CONTRIBUTING.md`
-- Changelog: `CHANGELOG.md`
-- CI: GitHub Actions workflow at `.github/workflows/ci.yml`
+- Contribution guide: `CONTRIBUTING.md` 
+- Changelog: `CHANGELOG.md` 
+- CI: GitHub Actions workflow at `.github/workflows/ci.yml` 
+- Repository: `https://github.com/ExcelIT/geo-processing-toolkit` 
+- Website: `https://sscar.biz` 
 
-To prepare a public GitHub release quickly:
+## Project support and contact
 
-1. Create repository `geo-processing-toolkit` on GitHub
-2. Push `main` branch
-3. Verify Actions CI passes
-4. Create tag `v0.1.1` and publish a release
+For general information about the project and geospatial solution context:
+
+- General information: `data@sscar.biz` 
+
+For code issues, bug reports, feature requests, and infrastructure-related changes:
+
+- Use GitHub Issues in this repository
+- Repository owner: `ExcelIT` 
 
 ## CLI usage
 
@@ -219,3 +225,21 @@ See `CONTRIBUTING.md`.
 ## License
 
 MIT License. See `LICENSE`.
+
+## Contact
+
+Geo Processing Toolkit is maintained as an open-source geospatial Python project.
+
+### General information
+For general information, project context, partnerships, or geospatial service inquiries:
+
+- `data@sscar.biz` 
+
+### Code, bugs, and infrastructure
+For code-related issues, bug reports, enhancement requests, and repository workflow matters:
+
+- Open an issue in this repository
+- Repository owner: `ExcelIT` 
+
+### Website
+- `https://sscar.biz` 
