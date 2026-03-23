@@ -112,6 +112,23 @@ cd geo-processing-toolkit
 pip install .
 ```
 
+## Development quick start
+
+Create a virtual environment and install development dependencies:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+```
+
+Run checks:
+
+```bash
+ruff check .
+python -m pytest -q
+```
+
 ## Dependencies
 
 Main runtime dependencies:
