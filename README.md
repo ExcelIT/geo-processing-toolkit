@@ -6,6 +6,14 @@ Project website: `https://sscar.biz`
 General information: `data@sscar.biz`  
 Code and infrastructure: `info@excelit.biz` 
 
+## Maintainer note
+
+This project is being built in small, practical increments.
+
+The current priority is not feature breadth. It is making geospatial validation, repair, and reporting workflows easier to trust, easier to repeat, and easier to inspect before data moves into production use.
+
+That means some areas are intentionally more mature than others. Validation and reporting are ahead of format breadth.
+
 ## Why this project exists
 
 A lot of geospatial work still depends on brittle scripts, inconsistent source data, and manual corrections that break pipelines or reduce trust in outputs. Geo Processing Toolkit focuses on the boring but critical layer between raw data and operational use:
@@ -128,6 +136,17 @@ Run checks:
 ruff check .
 python -m pytest -q
 ```
+
+## Tested against
+
+The project is currently being exercised primarily on:
+
+- Python 3.11
+- local CLI-driven workflows
+- small to medium raster/vector validation scenarios
+- GeoTIFF, GeoPackage, and shapefile-oriented examples
+
+The current focus is correctness, validation clarity, and report consistency before broader format expansion.
 
 ## Dependencies
 
@@ -262,6 +281,20 @@ Geo Processing Toolkit focuses on a narrower problem:
 - making preprocessing steps easier to repeat and audit
 
 It is designed to complement core geospatial libraries, not compete with them.
+
+## Current limitations
+
+This project is still early-stage and intentionally narrow.
+
+Current limitations include:
+
+- raster stack validation focuses on detection and reporting, not automatic repair
+- nodata findings are surfaced as warnings and still require user judgment
+- format support is not yet broad; GeoParquet, COG, and STAC-related work are still evolving
+- examples are documentation-first and intentionally lightweight
+- the toolkit is not a replacement for core geospatial libraries such as GDAL, Rasterio, GeoPandas, or Shapely
+
+If a workflow needs heavy transformation, reprojection, resampling, or domain-specific logic, those steps should remain explicit rather than hidden behind this toolkit.
 
 ## Python usage
 
