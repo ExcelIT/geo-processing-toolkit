@@ -6,7 +6,11 @@ from typing import Iterable
 import geopandas as gpd
 from shapely.geometry import GeometryCollection
 from shapely.geometry.base import BaseGeometry
-from shapely.make_valid import make_valid
+
+try:
+    from shapely import make_valid
+except ImportError:
+    from shapely.validation import make_valid
 
 from .utils import infer_driver_from_path, utc_now_iso, write_json
 
