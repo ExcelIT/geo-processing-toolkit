@@ -10,9 +10,9 @@ Code and infrastructure: `info@excelit.biz`
 
 This project is being built in small, practical increments.
 
-The current priority is not feature breadth. It is making geospatial validation, repair, and reporting workflows easier to trust, easier to repeat, and easier to inspect before data moves into production use.
+The priority is not to cover every format or compete with larger geospatial libraries. The priority is to make validation, repair, and reporting workflows easier to trust before data moves into production use.
 
-That means some areas are intentionally more mature than others. Validation and reporting are ahead of format breadth.
+Some parts of the project are intentionally more mature than others. Validation and reporting are ahead of broader format support.
 
 ## Why this project exists
 
@@ -282,6 +282,20 @@ Geo Processing Toolkit focuses on a narrower problem:
 
 It is designed to complement core geospatial libraries, not compete with them.
 
+## Platform coexistence
+
+Geo Processing Toolkit is designed to complement the geospatial stack, not replace it.
+
+It is meant to sit between raw inputs and downstream systems such as:
+
+- Python geospatial workflows
+- desktop GIS platforms
+- cloud-native raster and vector pipelines
+- catalog- and metadata-driven workflows
+- automation or CI/CD checks
+
+The long-term direction is to improve cross-platform readiness through clearer validation, stronger reporting, and better standards-aware checks.
+
 ## Current limitations
 
 This project is still early-stage and intentionally narrow.
@@ -355,6 +369,13 @@ Included examples cover:
 - add parallel composite processing
 
 See `docs/roadmap.md`.
+
+## Project direction
+
+See:
+- `docs/VISION.md` 
+- `docs/COMPATIBILITY.md` 
+- `docs/roadmap.md` 
 
 ## Contributing
 
