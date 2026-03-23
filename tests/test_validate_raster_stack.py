@@ -130,9 +130,9 @@ def test_validate_raster_stack_warns_when_nodata_differs(tmp_path):
     a = tmp_path / "a.tif"
     b = tmp_path / "b.tif"
     c = tmp_path / "c.tif"
-    _make_raster(a, nodata=0)
-    _make_raster(b, nodata=-9999)
-    _make_raster(c, nodata=0)
+    _make_raster(a, nodata=0, dtype="int16")
+    _make_raster(b, nodata=-9999, dtype="int16")
+    _make_raster(c, nodata=0, dtype="int16")
 
     report = validate_raster_stack([str(a), str(b), str(c)])
     messages = [m for f in report["files"] for m in f["messages"]]
