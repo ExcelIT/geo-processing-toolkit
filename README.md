@@ -401,6 +401,7 @@ See `docs/roadmap.md`.
 See:
 - `docs/VISION.md` 
 - `docs/COMPATIBILITY.md` 
+- `docs/USE-CASES.md` 
 - `docs/roadmap.md` 
 
 ## Contributing
