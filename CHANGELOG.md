@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.2.0
+
+### Added
+
+- `validate-raster-stack` command for pre-flight raster compatibility checks
+- shared JSON report envelope for core command outputs
+- documented report schema in `docs/report-schema.md`
+- expanded roadmap around geospatial QA, validation, repair, and standards readiness
+
+### Improved
+
+- README positioning and project scope clarity
+- command documentation and examples
+- contact, contribution, and security guidance
+
+### Notes
+
+This release strengthens Geo Processing Toolkit as a focused open-source toolkit for validating, repairing, and standardizing geospatial datasets before production GIS and remote-sensing workflows.
+
 ## 0.1.2 - 2026-03-23
 
 ### Added
