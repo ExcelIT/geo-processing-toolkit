@@ -83,21 +83,21 @@ Main runtime dependencies:
 ## Open source status
 
 - License: MIT (`LICENSE`)
-- Contribution guide: `CONTRIBUTING.md` 
-- Changelog: `CHANGELOG.md` 
-- CI: GitHub Actions workflow at `.github/workflows/ci.yml` 
-- Repository: `https://github.com/ExcelIT/geo-processing-toolkit` 
-- Website: `https://sscar.biz` 
+- Contribution guide: `CONTRIBUTING.md`
+- Changelog: `CHANGELOG.md`
+- CI: GitHub Actions workflow at `.github/workflows/ci.yml`
+- Repository: `https://github.com/ExcelIT/geo-processing-toolkit`
+- Website: `https://sscar.biz`
 
 ## Project support and contact
 
 For general project information, partnerships, and geospatial solution context:
 
-- General information: `data@sscar.biz` 
+- General information: `data@sscar.biz`
 
 For code issues, repository workflows, and infrastructure-related matters:
 
-- Code and infrastructure: `info@excelit.biz` 
+- Code and infrastructure: `info@excelit.biz`
 - Or open a GitHub issue in this repository for non-sensitive topics
 
 ## CLI usage
@@ -233,13 +233,13 @@ Geo Processing Toolkit is maintained as an open-source geospatial Python project
 ### General information
 For general information, project context, partnerships, or geospatial service inquiries:
 
-- `data@sscar.biz` 
+- `data@sscar.biz`
 
 ### Code, bugs, and infrastructure
 For code-related issues, bug reports, enhancement requests, repository workflow matters, and infrastructure-related questions:
 
-- `info@excelit.biz` 
+- `info@excelit.biz`
 - Or open an issue in this repository for non-sensitive topics
 
 ### Website
-- `https://sscar.biz` 
+- `https://sscar.biz`

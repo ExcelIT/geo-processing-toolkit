@@ -17,12 +17,12 @@ Please use GitHub Issues for:
 ### General information
 For general project information, partnerships, or geospatial context:
 
-- `data@sscar.biz` 
+- `data@sscar.biz`
 
 ### Code and repository workflows
 For code-related questions, repository workflows, and infrastructure-related matters:
 
-- `info@excelit.biz` 
+- `info@excelit.biz`
 
 For non-sensitive technical matters, you can also use GitHub Issues and Pull Requests in this repository.
 

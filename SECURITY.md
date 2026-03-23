@@ -7,8 +7,8 @@ If you believe you have found a security vulnerability in Geo Processing Toolkit
 ### Preferred reporting path
 For responsible disclosure, contact the maintainers privately first:
 
-- Security contact: `data@sscar.biz` 
-- Technical/code and infrastructure contact: `info@excelit.biz` 
+- Security contact: `data@sscar.biz`
+- Technical/code and infrastructure contact: `info@excelit.biz`
 
 Please include **[SECURITY]** in the subject line and describe:
 
@@ -25,7 +25,7 @@ For non-sensitive bugs, general defects, and improvement requests, use GitHub Is
 
 This policy applies to:
 
-- `https://github.com/ExcelIT/geo-processing-toolkit` 
+- `https://github.com/ExcelIT/geo-processing-toolkit`
 
 ## Supported Versions
 
