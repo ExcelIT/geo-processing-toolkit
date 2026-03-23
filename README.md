@@ -220,6 +220,16 @@ Optional behavior:
 - `--non-recursive` to search only direct children of `--root`
 - `--report out/folder_search.json` to save a JSON report
 
+## Validate raster stack compatibility
+
+Check whether a group of rasters can safely be used together before temporal compositing or batch processing:
+
+```bash
+gptk validate-raster-stack ./rasters --pattern "*.tif" --recursive --json-out reports/stack_validation.json
+```
+
+This command validates CRS, bounds, resolution, transform, dimensions, band count, dtype, driver, and nodata metadata, then writes a machine-readable report if requested.
+
 ## Why use this toolkit instead of general geospatial libraries?
 
 Core libraries such as GeoPandas, Rasterio, Shapely, and GDAL remain essential and are not replaced by this project.

@@ -1,0 +1,149 @@
+import json
+
+import numpy as np
+import rasterio
+from click.testing import CliRunner
+from rasterio.transform import from_origin
+
+from geo_processing_toolkit.cli import cli
+from geo_processing_toolkit.validate_raster_stack import validate_raster_stack
+
+
+def _make_raster(
+    path,
+    *,
+    crs="EPSG:32619",
+    width=10,
+    height=10,
+    res=10.0,
+    count=1,
+    dtype="uint16",
+    nodata=0,
+    driver="GTiff",
+):
+    data = np.ones((height, width), dtype=dtype)
+    transform = from_origin(0.0, float(height * res), float(res), float(res))
+    with rasterio.open(
+        path,
+        "w",
+        driver=driver,
+        height=height,
+        width=width,
+        count=count,
+        dtype=dtype,
+        crs=crs,
+        transform=transform,
+        nodata=nodata,
+    ) as dst:
+        for idx in range(1, count + 1):
+            dst.write(data, idx)
+
+
+def test_validate_raster_stack_passes_for_aligned_rasters(tmp_path):
+    a = tmp_path / "a.tif"
+    b = tmp_path / "b.tif"
+    _make_raster(a)
+    _make_raster(b)
+
+    report = validate_raster_stack([str(a), str(b)])
+
+    assert report["status"] == "PASS"
+    assert report["summary"]["errors"] == 0
+    assert report["summary"]["warnings"] == 0
+
+
+def test_validate_raster_stack_fails_on_crs_mismatch(tmp_path):
+    a = tmp_path / "a.tif"
+    b = tmp_path / "b.tif"
+    _make_raster(a, crs="EPSG:32619")
+    _make_raster(b, crs="EPSG:4326")
+
+    report = validate_raster_stack([str(a), str(b)])
+    messages = [m for f in report["files"] for m in f["messages"]]
+
+    assert report["status"] == "FAIL"
+    assert any(m["code"] == "CRS_MISMATCH" for m in messages)
+
+
+def test_validate_raster_stack_fails_on_resolution_mismatch(tmp_path):
+    a = tmp_path / "a.tif"
+    b = tmp_path / "b.tif"
+    _make_raster(a, res=10.0)
+    _make_raster(b, res=20.0)
+
+    report = validate_raster_stack([str(a), str(b)])
+    messages = [m for f in report["files"] for m in f["messages"]]
+
+    assert report["status"] == "FAIL"
+    assert any(m["code"] == "RESOLUTION_MISMATCH" for m in messages)
+
+
+def test_validate_raster_stack_warns_on_missing_nodata(tmp_path):
+    a = tmp_path / "a.tif"
+    b = tmp_path / "b.tif"
+    _make_raster(a, nodata=0)
+    _make_raster(b, nodata=None)
+
+    report = validate_raster_stack([str(a), str(b)])
+    messages = [m for f in report["files"] for m in f["messages"]]
+
+    assert report["status"] == "PASS_WITH_WARNINGS"
+    assert any(m["code"] == "NODATA_MISSING" for m in messages)
+
+
+def test_validate_raster_stack_warns_on_dtype_mismatch(tmp_path):
+    a = tmp_path / "a.tif"
+    b = tmp_path / "b.tif"
+    _make_raster(a, dtype="uint16")
+    _make_raster(b, dtype="float32")
+
+    report = validate_raster_stack([str(a), str(b)])
+    messages = [m for f in report["files"] for m in f["messages"]]
+
+    assert report["status"] == "PASS_WITH_WARNINGS"
+    assert any(m["code"] == "DTYPE_MISMATCH" for m in messages)
+
+
+def test_validate_raster_stack_writes_json_report(tmp_path):
+    a = tmp_path / "a.tif"
+    b = tmp_path / "b.tif"
+    output_json = tmp_path / "report.json"
+    _make_raster(a)
+    _make_raster(b)
+
+    runner = CliRunner()
+    result = runner.invoke(
+        cli,
+        [
+            "validate-raster-stack",
+            str(a),
+            str(b),
+            "--json-out",
+            str(output_json),
+        ],
+    )
+
+    assert result.exit_code == 0
+    payload = json.loads(output_json.read_text(encoding="utf-8"))
+    assert payload["command"] == "validate-raster-stack"
+    assert payload["status"] == "PASS"
+
+
+def test_validate_raster_stack_supports_directory_input(tmp_path):
+    folder = tmp_path / "rasters"
+    folder.mkdir()
+    _make_raster(folder / "a.tif")
+    _make_raster(folder / "b.tif")
+
+    report = validate_raster_stack([str(folder)], pattern="*.tif", recursive=False)
+
+    assert report["status"] == "PASS"
+    assert len(report["resolved_inputs"]) == 2
+
+
+def test_validate_raster_stack_returns_no_rasters_found_error(tmp_path):
+    report = validate_raster_stack([str(tmp_path)], pattern="*.tif", recursive=False)
+    messages = [m for f in report["files"] for m in f["messages"]]
+
+    assert report["status"] == "FAIL"
+    assert any(m["code"] == "NO_RASTERS_FOUND" for m in messages)
