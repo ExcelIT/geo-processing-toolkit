@@ -1,58 +1,37 @@
 # Contributing
 
-Thanks for contributing to Geo Processing Toolkit.
+Thanks for your interest in contributing to Geo Processing Toolkit.
 
-Please review and follow `CODE_OF_CONDUCT.md`.
+## Before you contribute
 
-## Principles
+Please use GitHub Issues for:
 
-- Keep utilities practical and reusable
-- Prefer explicit behavior over hidden assumptions
-- Preserve CRS and nodata handling carefully
-- Add tests for new behavior when possible
-- Document CLI usage for every new command
+- bug reports
+- feature requests
+- documentation improvements
+- workflow discussions
+- validation and format support proposals
 
-## Development setup
+## Contact
 
-```bash
-python -m venv .venv
-source .venv/bin/activate  # Linux/macOS
-pip install --upgrade pip
-pip install -e .[dev]
-```
+### General information
+For general project information, partnerships, or geospatial context:
 
-## Run tests
+- `data@sscar.biz` 
 
-```bash
-pytest
-```
+### Code and repository workflows
+For code-related questions, repository workflows, and infrastructure-related matters:
 
-## Lint
+- `info@excelit.biz` 
 
-```bash
-ruff check .
-```
+For non-sensitive technical matters, you can also use GitHub Issues and Pull Requests in this repository.
 
-## Pull requests
+## Contribution expectations
 
-Please include:
+When contributing, please:
 
-- a short summary of the change
-- the motivation/problem addressed
-- example command or usage snippet
-- tests where applicable
-
-## Issues
-
-When reporting a problem, include:
-
-- input format(s)
-- CRS details if relevant
-- exact command used
-- traceback or error message
-- whether the issue is data-specific or reproducible
-
-## Security issues
-
-For sensitive vulnerabilities, do not open a public issue first.
-Follow `SECURITY.md` for private reporting guidance.
+- describe the problem clearly
+- include reproducible steps where possible
+- attach small sample data only when legally and technically safe
+- avoid committing sensitive or client-specific data
+- keep pull requests scoped and testable

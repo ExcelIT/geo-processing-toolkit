@@ -1,19 +1,32 @@
 # Security Policy
 
-## Supported Versions
-
-This project currently supports the latest release on the `main` branch.
-
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, please report it privately to the maintainers before opening a public issue.
+If you believe you have found a security vulnerability in Geo Processing Toolkit, please do not open a public GitHub issue for sensitive findings.
 
-Please include:
+### Preferred reporting path
+For responsible disclosure, contact the maintainers privately first:
 
-- a clear description of the issue
-- affected version/commit
-- reproduction steps
-- impact assessment
-- any suggested mitigation
+- Security contact: `data@sscar.biz` 
+- Technical/code and infrastructure contact: `info@excelit.biz` 
 
-We will acknowledge valid reports as quickly as possible and coordinate a fix and disclosure timeline.
+Please include **[SECURITY]** in the subject line and describe:
+
+- affected component
+- suspected impact
+- steps to reproduce
+- sample files or commands if safe to share
+- version or commit reference if known
+
+## Public issue tracker
+For non-sensitive bugs, general defects, and improvement requests, use GitHub Issues in this repository.
+
+## Scope
+
+This policy applies to:
+
+- `https://github.com/ExcelIT/geo-processing-toolkit` 
+
+## Supported Versions
+
+Security review is currently focused on the latest public release and the `main` branch.

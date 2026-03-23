@@ -91,14 +91,14 @@ Main runtime dependencies:
 
 ## Project support and contact
 
-For general information about the project and geospatial solution context:
+For general project information, partnerships, and geospatial solution context:
 
 - General information: `data@sscar.biz` 
 
-For code issues, bug reports, feature requests, and infrastructure-related changes:
+For code issues, repository workflows, and infrastructure-related matters:
 
-- Use GitHub Issues in this repository
-- Repository owner: `ExcelIT` 
+- Code and infrastructure: `info@excelit.biz` 
+- Or open a GitHub issue in this repository for non-sensitive topics
 
 ## CLI usage
 
@@ -236,10 +236,10 @@ For general information, project context, partnerships, or geospatial service in
 - `data@sscar.biz` 
 
 ### Code, bugs, and infrastructure
-For code-related issues, bug reports, enhancement requests, and repository workflow matters:
+For code-related issues, bug reports, enhancement requests, repository workflow matters, and infrastructure-related questions:
 
-- Open an issue in this repository
-- Repository owner: `ExcelIT` 
+- `info@excelit.biz` 
+- Or open an issue in this repository for non-sensitive topics
 
 ### Website
 - `https://sscar.biz` 
