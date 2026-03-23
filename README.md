@@ -1,53 +1,95 @@
 # Geo Processing Toolkit
 
-[![CI](https://github.com/ExcelIT/geo-processing-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/ExcelIT/geo-processing-toolkit/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Release](https://img.shields.io/github/v/release/ExcelIT/geo-processing-toolkit)](https://github.com/ExcelIT/geo-processing-toolkit/releases)
+Open-source Python toolkit for validating, repairing, and standardizing geospatial datasets before they enter production GIS, remote-sensing, climate-risk, and disaster-response workflows.
 
-Geo Processing Toolkit is an open-source Python toolkit for common geospatial preprocessing, validation, and conversion workflows.
+Project website: `https://sscar.biz`  
+General information: `data@sscar.biz`  
+Code and infrastructure: `info@excelit.biz` 
 
-It is designed for GIS analysts, remote sensing practitioners, developers, and researchers who need reliable utilities for:
+## Why this project exists
 
-- raster clipping to vector polygons
-- geometry validation and repair
-- vector dataset quality checks
-- temporal raster composites from date-based folders
-- JSON processing reports for repeatable workflows
+A lot of geospatial work still depends on brittle scripts, inconsistent source data, and manual corrections that break pipelines or reduce trust in outputs. Geo Processing Toolkit focuses on the boring but critical layer between raw data and operational use:
 
-This repository is intentionally focused on the boring, repetitive geospatial tasks that often break pipelines.
+- validate inputs before processing
+- repair common geometry problems
+- normalize raster and vector workflows
+- detect compatibility issues early
+- produce machine-readable reports for audit, automation, and downstream use
 
-## Features
+This project is intentionally focused on repeatability, validation, and standards readiness instead of trying to become a full GIS framework.
 
-- **Clip rasters to polygons** with optional output extent forced to vector bounds
-- **Repair invalid geometries** and prepare data for export
-- **Validate vector datasets** and generate machine-readable reports
-- **Build temporal composites** from multi-date raster folders
-- **Emit JSON reports** to support QA, automation, and reproducibility
+## What it does
 
-## Repository structure
+Geo Processing Toolkit currently focuses on practical preprocessing and QA tasks such as:
 
-```text
-geo-processing-toolkit/
-├── README.md
-├── LICENSE
-├── pyproject.toml
-├── requirements.txt
-├── .gitignore
-├── CONTRIBUTING.md
-├── CHANGELOG.md
-├── src/
-│   └── geo_processing_toolkit/
-│       ├── __init__.py
-│       ├── cli.py
-│       ├── clip.py
-│       ├── geometry_fix.py
-│       ├── temporal_composite.py
-│       ├── utils.py
-│       └── validate.py
-├── tests/
-├── examples/
-└── docs/
-```
+- raster clipping to polygon extent
+- geometry repair for invalid vector inputs
+- vector validation and reporting
+- temporal composite generation
+- JSON processing reports
+- folder and input discovery helpers
+
+## Where it fits in the stack
+
+This toolkit is designed to sit between raw geospatial data and downstream analytics, mapping, or decision-support systems.
+
+Typical use cases include:
+
+- validating government or operational base layers before use
+- standardizing vector inputs before dashboarding or analysis
+- checking raster compatibility before time-series processing
+- preparing reproducible preprocessing steps for remote-sensing workflows
+- generating QA evidence for project, compliance, or delivery records
+
+## Target users
+
+This project is intended for:
+
+- GIS analysts
+- remote-sensing practitioners
+- geospatial developers
+- environmental and monitoring teams
+- crisis and resilience data teams
+- consultants building repeatable geospatial workflows
+
+## Design goals
+
+The project is being built around these principles:
+
+- clear command-line workflows
+- predictable and testable behavior
+- lightweight, practical utilities
+- machine-readable reporting
+- format-aware validation and repair
+- compatibility with modern geospatial standards
+
+## Planned direction
+
+The near-term direction of the project is to strengthen support for operational geospatial QA and cloud-native workflows, including:
+
+- raster stack alignment checks
+- GeoParquet support
+- Cloud Optimized GeoTIFF (COG) awareness
+- nodata harmonization checks
+- STAC-oriented validation helpers
+- richer JSON report schemas
+
+## Non-goals
+
+This project is not trying to:
+
+- replace GeoPandas, Rasterio, GDAL, or other core geospatial libraries
+- become a desktop GIS
+- duplicate large-scale analysis frameworks
+- hide underlying geospatial complexity behind vague abstractions
+
+Instead, it focuses on the validation, repair, and standardization layer that many production workflows still handle inconsistently.
+
+## Current commands and modules
+
+Core modules and commands are organized around practical workflow steps such as clipping, validation, geometry repair, reporting, and temporal composites.
+
+Continue reading below for installation, usage, examples, testing, and project roadmap.
 
 ## Installation
 
