@@ -1,5 +1,9 @@
 # Geo Processing Toolkit
 
+[![CI](https://github.com/ExcelIT/geo-processing-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/ExcelIT/geo-processing-toolkit/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Release](https://img.shields.io/github/v/release/ExcelIT/geo-processing-toolkit)](https://github.com/ExcelIT/geo-processing-toolkit/releases)
+
 Geo Processing Toolkit is an open-source Python toolkit for common geospatial preprocessing, validation, and conversion workflows.
 
 It is designed for GIS analysts, remote sensing practitioners, developers, and researchers who need reliable utilities for:

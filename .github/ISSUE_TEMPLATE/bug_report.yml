@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a reproducible problem in Geo Processing Toolkit
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug report. Please provide enough detail to reproduce the issue.
+
+  - type: input
+    id: command
+    attributes:
+      label: Command used
+      description: Exact CLI command or Python call
+      placeholder: gptk search-folder --root data --query sentinel
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: traceback
+    attributes:
+      label: Error output / traceback
+      render: shell
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: v0.1.1
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, dependency versions
+      placeholder: macOS 15, Python 3.11
