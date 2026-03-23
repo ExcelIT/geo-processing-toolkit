@@ -5,7 +5,7 @@ from typing import Any
 
 import geopandas as gpd
 
-from .utils import utc_now_iso, write_json
+from .utils import build_report_envelope, write_json
 
 
 def _field_summary(gdf: gpd.GeoDataFrame) -> list[dict[str, Any]]:
@@ -50,22 +50,35 @@ def validate_vector_file(input_path: str | Path, report_path: str | Path | None 
     if total_count == 0:
         findings.append("Dataset contains zero features.")
 
-    report = {
-        "timestamp_utc": utc_now_iso(),
-        "operation": "validate_vector_file",
-        "input_path": str(input_path),
-        "summary": {
-            "feature_count": total_count,
-            "invalid_geometries": invalid_count,
-            "empty_geometries": empty_count,
-            "null_geometries": null_geom_count,
-            "crs": str(gdf.crs) if gdf.crs else None,
-            "geometry_types": sorted(gdf.geometry.geom_type.dropna().unique().tolist()) if total_count else [],
-            "bbox": bbox,
-        },
-        "fields": _field_summary(gdf),
-        "findings": findings,
+    summary = {
+        "feature_count": total_count,
+        "invalid_geometries": invalid_count,
+        "empty_geometries": empty_count,
+        "null_geometries": null_geom_count,
+        "crs": str(gdf.crs) if gdf.crs else None,
+        "geometry_types": sorted(gdf.geometry.geom_type.dropna().unique().tolist()) if total_count else [],
+        "bbox": bbox,
     }
+    messages = [{"level": "warning", "code": "VALIDATION_FINDING", "message": item} for item in findings]
+    status = "PASS_WITH_WARNINGS" if messages else "PASS"
+    files = [
+        {
+            "path": str(input_path),
+            "status": "warning" if messages else "pass",
+            "role": "input_vector",
+            "messages": messages,
+        }
+    ]
+    report = build_report_envelope(
+        command="validate-vector",
+        status=status,
+        summary=summary,
+        files=files,
+        input_path=str(input_path),
+        fields=_field_summary(gdf),
+        findings=findings,
+        operation="validate_vector_file",
+    )
 
     if report_path:
         write_json(report, report_path)

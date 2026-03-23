@@ -26,5 +26,7 @@ def test_search_folder_command(tmp_path):
 
     assert result.exit_code == 0
     payload = json.loads(result.output)
-    assert payload["operation"] == "search_folders"
+    assert payload["command"] == "search-folder"
+    assert payload["status"] == "PASS"
+    assert "generated_at" in payload
     assert payload["summary"]["match_count"] == 2

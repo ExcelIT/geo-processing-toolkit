@@ -24,6 +24,25 @@ def write_json(data: dict[str, Any], path: str | Path) -> Path:
     return output
 
 
+def build_report_envelope(
+    *,
+    command: str,
+    status: str,
+    summary: dict[str, Any],
+    files: list[dict[str, Any]],
+    **extra: Any,
+) -> dict[str, Any]:
+    report = {
+        "command": command,
+        "status": status,
+        "summary": summary,
+        "files": files,
+        "generated_at": utc_now_iso(),
+    }
+    report.update(extra)
+    return report
+
+
 def infer_driver_from_path(path: str | Path) -> str:
     suffix = Path(path).suffix.lower()
     drivers = {

@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .utils import utc_now_iso, write_json
+from .utils import build_report_envelope, write_json
 
 
 def search_folders(
@@ -36,22 +36,34 @@ def search_folders(
             if max_results is not None and len(matches) >= max_results:
                 break
 
-    report = {
-        "timestamp_utc": utc_now_iso(),
-        "operation": "search_folders",
-        "input": {
+    summary = {
+        "scanned_dir_count": scanned_dir_count,
+        "match_count": len(matches),
+    }
+    files = [
+        {
+            "path": str(path),
+            "status": "pass",
+            "role": "matched_directory",
+            "messages": [],
+        }
+        for path in matches
+    ]
+    report = build_report_envelope(
+        command="search-folder",
+        status="PASS",
+        summary=summary,
+        files=files,
+        input={
             "root": str(root_path),
             "query": query,
             "case_sensitive": case_sensitive,
             "recursive": recursive,
             "max_results": max_results,
         },
-        "summary": {
-            "scanned_dir_count": scanned_dir_count,
-            "match_count": len(matches),
-        },
-        "matches": [str(path) for path in matches],
-    }
+        matches=[str(path) for path in matches],
+        operation="search_folders",
+    )
 
     if report_path:
         write_json(report, report_path)

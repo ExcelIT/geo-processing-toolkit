@@ -11,7 +11,7 @@ from rasterio.mask import mask
 from rasterio.transform import from_origin
 from rasterio.warp import reproject, Resampling, transform_geom
 
-from .utils import utc_now_iso, write_json
+from .utils import build_report_envelope, write_json
 
 
 def _vector_geoms_in_raster_crs(gdf: gpd.GeoDataFrame, raster_crs) -> list[dict[str, Any]]:
@@ -126,20 +126,43 @@ def clip_raster(
                 "nodata": src.nodata,
             }
 
-        report = {
-            "timestamp_utc": utc_now_iso(),
-            "operation": "clip_raster",
-            "input_raster": str(raster_path),
-            "input_vector": str(vector_path),
-            "output_raster": str(output_path),
-            "summary": {
-                "raster_crs": str(src.crs),
-                "vector_crs": str(gdf.crs) if gdf.crs else None,
-                "band_count": src.count,
-                "dtype": src.dtypes[0],
-                **details,
-            },
+        summary = {
+            "raster_crs": str(src.crs),
+            "vector_crs": str(gdf.crs) if gdf.crs else None,
+            "band_count": src.count,
+            "dtype": src.dtypes[0],
+            **details,
         }
+        files = [
+            {
+                "path": str(raster_path),
+                "status": "pass",
+                "role": "input_raster",
+                "messages": [],
+            },
+            {
+                "path": str(vector_path),
+                "status": "pass",
+                "role": "input_vector",
+                "messages": [],
+            },
+            {
+                "path": str(output_path),
+                "status": "pass",
+                "role": "output_raster",
+                "messages": [],
+            },
+        ]
+        report = build_report_envelope(
+            command="clip-raster",
+            status="PASS",
+            summary=summary,
+            files=files,
+            input_raster=str(raster_path),
+            input_vector=str(vector_path),
+            output_raster=str(output_path),
+            operation="clip_raster",
+        )
 
     if report_path:
         write_json(report, report_path)

@@ -14,6 +14,9 @@ def test_validate_vector_file(tmp_path):
     gdf.to_file(path, driver="GPKG")
 
     report = validate_vector_file(path)
+    assert report["command"] == "validate-vector"
+    assert report["status"] == "PASS"
+    assert "generated_at" in report
     assert report["summary"]["feature_count"] == 2
     assert report["summary"]["invalid_geometries"] == 0
     assert report["summary"]["crs"] == "EPSG:4326"

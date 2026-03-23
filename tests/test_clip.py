@@ -33,6 +33,9 @@ def test_clip_raster(tmp_path):
     gdf.to_file(vector_path, driver="GPKG")
 
     report = clip_raster(raster_path, vector_path, out_path, crop=True)
+    assert report["command"] == "clip-raster"
+    assert report["status"] == "PASS"
+    assert "generated_at" in report
     assert report["summary"]["band_count"] == 1
 
     with rasterio.open(out_path) as src:

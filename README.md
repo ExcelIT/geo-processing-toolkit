@@ -273,6 +273,8 @@ Where relevant, commands write JSON reports containing:
 
 This makes the toolkit easier to use in automated pipelines such as CI, scheduled tasks, n8n, or other orchestration systems.
 
+See `docs/report-schema.md` for the canonical JSON report envelope and example payload.
+
 ## Suggested roadmap
 
 - add Cloud Optimized GeoTIFF support

@@ -9,6 +9,9 @@ def test_search_folders_recursive(tmp_path):
 
     report = search_folders(root=tmp_path, query="alpha")
 
+    assert report["command"] == "search-folder"
+    assert report["status"] == "PASS"
+    assert "generated_at" in report
     assert report["summary"]["match_count"] == 2
     assert any(path.endswith("alpha_folder") for path in report["matches"])
     assert any(path.endswith("alpha_nested") for path in report["matches"])
