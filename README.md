@@ -220,6 +220,20 @@ Optional behavior:
 - `--non-recursive` to search only direct children of `--root`
 - `--report out/folder_search.json` to save a JSON report
 
+## Why use this toolkit instead of general geospatial libraries?
+
+Core libraries such as GeoPandas, Rasterio, Shapely, and GDAL remain essential and are not replaced by this project.
+
+Geo Processing Toolkit focuses on a narrower problem:
+
+- validating geospatial inputs before use
+- repairing common data-quality issues
+- standardizing workflow behavior
+- generating machine-readable reports
+- making preprocessing steps easier to repeat and audit
+
+It is designed to complement core geospatial libraries, not compete with them.
+
 ## Python usage
 
 ```python
