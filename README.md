@@ -281,6 +281,18 @@ See:
 
 - `docs/report-schema.md`
 
+## Operational QA examples
+
+Documentation-first workflow examples are available under:
+
+- `examples/operational_qa/README.md`
+
+Included examples cover:
+
+- validating and repairing an incoming vector delivery
+- validating raster stack readiness before compositing
+- reviewing machine-readable QA reports
+
 ## Suggested roadmap
 
 - add Cloud Optimized GeoTIFF support

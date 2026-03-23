@@ -43,8 +43,10 @@ Planned work:
 - raster clipping example
 - geometry repair example
 - temporal composite example
+- example command bundles by workflow type
 - expected output and logging examples
 - lightweight sample workflow documentation
+- operational QA workflow examples for vector delivery, raster pre-flight checks, and report review
 
 ## Medium-term priorities
 
